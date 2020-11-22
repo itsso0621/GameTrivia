@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Who Wants to be a Millionaire?</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-core/4.1.0/css/fabric.min.css"
+    />
+    <link href="styles.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div
+      id="app"
+      @keyup.a="isAnswer(0)"
+      @keyup.b="isAnswer(1)"
+      @keyup.c="isAnswer(2)"
+      @keyup.d="isAnswer(3)"
+    >
+      <main v-if="isBeginPlay" v-cloak>
+        <div class="header">
+          <!-- Place to place messages or voting results etc -->
+        </div>
+        <h1 class="question" v-html="currentQ">
+          <!-- The question you fetched using the open trivia's API is displayed here -->
+        </h1>
+
+        <button id="a" class="item-a" @click="isAnswer(0)">
+          <span>A:</span>
+          <pre v-html="answers[0]"></pre>
+        </button>
+        <button id="b" class="item-b" @click="isAnswer(1)">
+          <span>B:</span>
+          <pre v-html="answers[1]"></pre>
+        </button>
+        <button id="c" class="item-c" @click="isAnswer(2)">
+          <span>C:</span>
+          <pre v-html="answers[2]"></pre>
+        </button>
+        <button id="d" class="item-d" @click="isAnswer(3)">
+          <span>D:</span>
+          <pre v-html="answers[3]"></pre>
+        </button>
+      </main>
+
+      <aside>
+        <section>
+          <button id="play">
+            <i
+              class="ms-Icon ms-Icon--Play"
+              aria-hidden="true"
+              @click="isBeginPlay = !isBeginPlay, playSound('../sounds/Theme.mp3')"
+            ></i>
+          </button>
+          <button id="fifty_fifty">
+            <i class="ms-Icon ms-Icon--Contrast" aria-hidden="true"></i>
+          </button>
+          <button id="ask_audience">
+            <i class="ms-Icon ms-Icon--Group" aria-hidden="true"></i>
+          </button>
+          <button id="phone_friend">
+            <i class="ms-Icon ms-Icon--Phone" aria-hidden="true"></i>
+          </button>
+        </section>
+
+        <ul>
+          <!-- <li>15 - $1,000,000</li>
+          <li>14 - $500,000</li>
+          <li>13 - $250,000</li>
+          <li>12 - $100,000</li>
+          <li>11 - $50,000</li>
+          <li>10 - $25,000</li>
+          <li>9 - $16,000</li>
+          <li>8 - $8,000</li>
+          <li>7 - $4,000</li>
+          <li>6 - $2,000</li>
+          <li>5 - $1,000</li>
+          <li>4 - $500</li>
+          <li>3 - $300</li> -->
+          <li
+            v-for="round in rounds"
+            :class="{ active: isActive(round.level) }"
+          >
+            {{ round.level }} - ${{ round.amount }}
+          </li>
+          <!-- <li class="active">1 - $100</li> -->
+        </ul>
+      </aside>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="index.js"></script>
+  </body>
+</html>
